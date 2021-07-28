@@ -11,15 +11,17 @@ Plus point: add a page to search by anime characters such as ‘naruto’, ‘ka
 
 Project Description:
 
-- Implemented using Storyboards and XIB.
+- Implemented using storyboards and XIBs.
 - Used design patterns: MVVM and Singleton.
-  - MVVM used because it allows me to easily scale my application, due to the differentiation of functionality into different modules, makes it easy to read and understand the behavior of the code.
-  - Singleton used in APIHandler file because API using during runtime and can be used in multiple places.
-- Used TableView to show search result.
-- Implemented universal request and URL builder system using EndPoints for different types of requests.
-- Implemented automatic keyboard resignation when tapping anywhere or on the return button.
-- Used Codable protocol to parse JSON using model.
-- APIHandler and ViewModels covered with UnitTests.
+   - Used MVVM because it allows me to easily scale my application by dividing functions into different modules, which makes it easier to read and understand the     behavior of the code.
+   - Singleton is used in the APIHandler file because the API is used at runtime and can be used in multiple places.
+- Used by TableView to display search results.
+- Implemented a system of universal queries and URL building using EndPoints for different types of requests.
+- Implemented automatic shutdown of the keyboard when you press anywhere or on the return button.
+- Uses the Codable protocol to parse JSON using a generic type.
+- Created the ImageDownloader method with caching functionality.
+- Implemented reusable View with tableView functionality.
+- APIHandler and ViewModels covered by UnitTests.
 - No third-party libraries, only native code.
 
 Screenshots:
