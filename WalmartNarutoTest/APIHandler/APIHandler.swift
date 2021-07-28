@@ -43,17 +43,17 @@ class APIHandler {
     ///   - endPoint: Type of URL, check EndPoints file
     ///   - params: Additional parameters for query part of URL
     ///   - completion: Results of request parsed with EpisodeResult Model
-    func requestData(endPoint: EndPoints, params: [QueryParams:String], completion: @escaping (EpisodeResult?) -> ()) {
+    func requestData<T>(type: T.Type, endPoint: EndPoints, params: [QueryParams:String], completion: @escaping (T?) -> ()) where T:Codable {
 
         guard let url = createURL(endPoint: endPoint, params: params) else { return }
-        URLSession.shared.dataTask(with: url) { data, _, err in
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, err in
             guard let data = data else {
                 if let err = err {
                     print(err.localizedDescription)
                 }
                 return
             }
-            completion(self.decodeData(data: data))
+            completion(self?.decodeData(data: data, type: type))
         }.resume()
     }
 
@@ -61,10 +61,10 @@ class APIHandler {
     /// Data JSON parser
     /// - Parameter data: data with JSON
     /// - Returns: parsed object as EpisodeResult Model
-    private func decodeData(data: Data) -> EpisodeResult? {
+    private func decodeData<T>(data: Data, type: T.Type) -> T? where T:Codable {
         let decoder = JSONDecoder()
         do {
-            return try decoder.decode(EpisodeResult.self, from: data)
+            return try decoder.decode(type.self, from: data)
         } catch {
             print(error.localizedDescription)
             return nil

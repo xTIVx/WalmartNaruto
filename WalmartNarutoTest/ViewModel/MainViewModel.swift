@@ -25,7 +25,7 @@ class MainViewModel {
     ///   - endPoint: type of fetch, check Endpoints file for more info
     ///   - completion: Letting know when data is updated
     func fetchData(endPoint: EndPoints, completion:@escaping ([Anime]) -> ()) {
-        APIHandler.shared.requestData(endPoint: endPoint, params: [.q: self.searchRequestText]) { animes in
+        APIHandler.shared.requestData(type: EpisodeResult.self, endPoint: endPoint, params: [.q: self.searchRequestText]) { animes in
             guard let animes = animes?.results else {return}
             self.animesObject = animes
             completion(animes)

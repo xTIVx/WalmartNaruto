@@ -12,11 +12,8 @@ class WalmartNarutoTestTests: XCTestCase {
 
     var sut: MainViewModel?
 
-
     override func setUpWithError() throws {
-
         sut = MainViewModel(searchRequestText: Constants.BaseURL.rawValue)
-
     }
 
     override func tearDownWithError() throws {

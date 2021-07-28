@@ -10,19 +10,20 @@ import XCTest
 
 class APIHandlerTests: XCTestCase {
 
-    var sut = APIHandler.shared
+    var sut: APIHandler?
 
     override func setUpWithError() throws {
+        sut = APIHandler.shared
     }
 
     override func tearDownWithError() throws {
-
+        sut = nil
     }
 
 
     func testRequestData() {
         let expectation = expectation(description: "gotData")
-        sut.requestData(endPoint: .search, params: [.q: "naruto"]) { result in
+        sut?.requestData(type: EpisodeResult.self, endPoint: .search, params: [.q: "naruto"]) { result in
             XCTAssertNotNil(result)
             expectation.fulfill()
         }

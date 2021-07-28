@@ -16,7 +16,6 @@ class MainTableViewCell: UITableViewCell {
     @IBOutlet weak var scoreLbl: UILabel!
     @IBOutlet weak var synopsisLbl: UILabel!
 
-    let imageCache = NSCache<NSString, UIImage>()
     var episodeObject: Anime? {
         willSet(obj) {
             self.titleLbl.text = obj?.title
@@ -26,19 +25,20 @@ class MainTableViewCell: UITableViewCell {
             self.synopsisLbl.text = obj?.synopsis ?? ""
 
             //Setting image
-            self.getImage(url: obj?.image_url) { image in
+            ImageDownloader.shared.getImage(url: obj?.image_url) { [weak self] image in
                 DispatchQueue.main.async {
-                    self.posterImage.image = image
+                    self?.posterImage.image = image
                 }
             }
         }
     }
+}
 
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+class ImageDownloader {
+    static let shared = ImageDownloader()
+    private init() {}
+    let imageCache = NSCache<NSString, UIImage>()
 
     func getImage(url: String?, completion:@escaping (UIImage) -> ()) {
         guard let url = url else {
